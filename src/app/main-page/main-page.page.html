@@ -1,0 +1,289 @@
+<ion-content>
+    <!-- header -->
+    <ion-grid>
+        <ion-row>
+            <ion-col class="d-flex justify-content-center" size="12">
+                <ion-card class="card-shadow">
+                    <ion-card-content>
+                        <ion-label class="form-label header-label">الرئيسية</ion-label>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!-- progress bar -->
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12" class="d-flex justify-content-center">
+                <div class="progress-circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845
+                             a 15.9155 15.9155 0 0 1 0 31.831
+                             a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path #progressCircle class="circle" stroke-dasharray="0, 100" d="M18 2.0845
+                             a 15.9155 15.9155 0 0 1 0 31.831
+                             a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="progress-text">
+                        <span #progressValue>2 of 4</span>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!-- sub header -->
+    <ion-grid>
+        <ion-row>
+            <ion-col class="d-flex justify-content-center" size="12">
+                <ion-label class="form-label sub-header-label">
+                    التعديلات المطلوبة
+                </ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-card>
+        <ion-card-content>
+            <!-- segments -->
+            <ion-segment scrollable [value]="segmentSection.selectedSegment.segmentCode"
+                (ionChange)="segmentChanging($event)">
+                <ion-segment-button *ngFor="let segment of segmentSection.allAvaliableSegments"
+                    [value]="segment.segmentCode">
+                    <ion-label class="form-label">{{ segment.name }}</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+            <!-- company segment -->
+            <form [formGroup]="companySection.formGroup">
+                <ion-grid *ngIf="companySection.visible">
+                    <ion-row>
+                        <ion-col>
+                            <ion-label class="form-label">
+                                تفاصيل بيانات الشركاء المعدلة
+                            </ion-label>
+                            <ion-textarea class="form-control d-table" #companyDetails [autoGrow]="true" rows="1"
+                                inputmode="text" (ionBlur)="companyDetails.value = companyDetails.value?.trim()"
+                                formControlName="companyDetails"></ion-textarea>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </form>
+            <!-- share capital segment -->
+            <form [formGroup]="shareCapitalSection.formGroup">
+                <ion-grid *ngIf="shareCapitalSection.visible">
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-label class="form-label">
+                                راس المال المسدد
+                            </ion-label>
+                            <ion-input class="form-control" formControlName="paidUpCapital"></ion-input>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label class="form-label">
+                                راس المال المحاسب عليه
+                            </ion-label>
+                            <ion-input class="form-control" formControlName="accountableCapital"
+                                [readonly]="true"></ion-input>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-label class="form-label">
+                            تاريخ تأثير تعديل راس المال
+                        </ion-label>
+                        <ion-input class="form-control" formControlName="date" type="date"></ion-input>
+                    </ion-row>
+                    <ion-row>
+                        <ion-label class="form-label">
+                            تفاصيل راس المال المعدلة
+                        </ion-label>
+                        <ion-textarea class="form-control d-table" #shareCapitalDetails [autoGrow]="true" rows="1"
+                            inputmode="text" (ionBlur)="shareCapitalDetails.value = shareCapitalDetails.value?.trim()"
+                            formControlName="shareCapitalDetails"></ion-textarea>
+                    </ion-row>
+                </ion-grid>
+            </form>
+            <!-- activity segment -->
+            <form [formGroup]="activitySection.formGroup">
+                <ion-grid *ngIf="activitySection.visible">
+                    <ion-row>
+                        <ion-col size="12">
+                            <ion-checkbox class="ps-3" formControlName="activityCheckBox"
+                                (ionChange)="activityCheckBoxChange($event)"></ion-checkbox>
+                            <ion-label class="form-label">تعديل الانشطة</ion-label>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="12">
+                            <ion-checkbox (ionChange)="divisionCheckBoxChange($event)"
+                                formControlName="divisionCheckBox" class="ps-3"></ion-checkbox>
+                            <ion-label class="form-label">تعديل الشُعب</ion-label>
+                        </ion-col>
+                    </ion-row>
+                    <div *ngIf="showDivisionForm">
+                        <ion-row>
+                            <ion-col size="12">
+                                <ion-label class="form-label">
+                                    اسم الشُعبة
+                                </ion-label>
+                                <ion-select interface="popover" justify="end" fill="outline"
+                                    formControlName="divisionName">
+                                    <ion-select-option *ngFor="let division of divisionNames" [value]="division.code">
+                                        {{ division.name }}
+                                    </ion-select-option>
+                                </ion-select>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-label class="form-label">
+                                تاريخ الاضافة للشُعبة
+                            </ion-label>
+                            <ion-input class="form-control" formControlName="divisionDate" type="date"></ion-input>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-label class="form-label">تاريخ المحو للشُعبة</ion-label>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-label class="form-label labelColor d-flex justify-content-end">12 / 4 / 2023
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col size="12">
+                                <ion-toggle formControlName="active" (ionChange)="activationToggle($event)"
+                                    class="ps-3"></ion-toggle>
+                                <ion-label
+                                    [ngClass]="{'active': activitySection.formGroup.value.active, 'inactive': !activitySection.formGroup.value.active}"
+                                    class="form-label">نشط</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col size="12">
+                                <ion-button (click)="addCard()" class="add-btn" fill="clear">
+                                    <ion-icon name="add-circle-outline"></ion-icon>
+                                    اضافة شُعبة
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+
+                    <!-- card that appear when i click 'اضافة شُعبة' -->
+                    <div formArrayName="cards">
+                        <div class="card-container" *ngFor="let card of cards.controls; let i = index"
+                            [formGroupName]="i">
+                            <ion-icon class="close-icon" name="close-circle" (click)="removeCard(i)"></ion-icon>
+                            <ion-card class="custom-card ion-padding">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="12">
+                                            <ion-label class="label">اسم الشُعبة :
+                                                <span class="value">{{ card.value.name }}</span>
+                                            </ion-label>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-col size="12">
+                                            <ion-label class="label">تاريخ الاضافة للشُعبة :
+                                                <span class="value">{{ card.value.date | date:'yyyy-MM-dd' }}</span>
+                                            </ion-label>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-col size="12">
+                                            <ion-label class="label">تاريخ المحو للشُعبة :
+                                                <span class="value">xx</span>
+                                            </ion-label>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-col size="12">
+                                            <ion-button (click)="openEditModal(i)" fill="clear">
+                                                <ion-icon name="pencil-outline"></ion-icon>
+                                                تعديل
+                                            </ion-button>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </ion-card>
+                        </div>
+                    </div>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label class="form-label">
+                                تفاصيل بيانات النشاط المعدلة
+                            </ion-label>
+                            <ion-textarea class="form-control d-table" #activityDetails [autoGrow]="true" rows="1"
+                                inputmode="text" (ionBlur)="activityDetails.value = activityDetails.value?.trim()"
+                                formControlName="activityDetails"></ion-textarea>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </form>
+            <!-- forward & backward buttons -->
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <ion-button (click)="moveForward()" class="forward-btn" fill="outline">
+                            <ion-icon name="arrow-forward"></ion-icon>
+                            استمر
+                        </ion-button>
+                    </ion-col>
+                    <ion-col class=" d-flex justify-content-end" size="6">
+                        <ion-button (click)="moveBackward()" class="backward-btn" fill="clear">
+                            عودة للخطوة السابقة
+                            <ion-icon name="arrow-back"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <!-- model to get new data -->
+            <ion-modal [isOpen]="isModalOpen">
+                <ng-template>
+                    <ion-header>
+                        <ion-toolbar>
+                            <ion-title>تعديل</ion-title>
+                            <ion-buttons slot="end">
+                                <ion-button color="danger" (click)="closeModal()">غلق</ion-button>
+                            </ion-buttons>
+                        </ion-toolbar>
+                    </ion-header>
+                    <ion-content>
+                        <form [formGroup]="editCardForm">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="12">
+                                        <ion-label class="form-label">
+                                            اسم الشُعبة
+                                        </ion-label>
+                                        <ion-select interface="popover" justify="end" fill="outline"
+                                            formControlName="name">
+                                            <ion-select-option *ngFor="let division of divisionNames"
+                                                [value]="division.code">
+                                                {{ division.name }}
+                                            </ion-select-option>
+                                        </ion-select>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-label class="form-label">
+                                        تاريخ الاضافة للشُعبة
+                                    </ion-label>
+                                    <ion-input class="form-control" formControlName="date" type="date"></ion-input>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class=" d-flex justify-content-center" size="12">
+                                        <ion-button (click)="saveChanges()" fill="outline">
+                                            <ion-icon name="pencil-outline"></ion-icon>
+                                            تعديل
+                                        </ion-button>
+                                        <!-- <ion-button class="edit-btn" (click)="saveChanges()">تعديل</ion-button> -->
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </form>
+                    </ion-content>
+                </ng-template>
+            </ion-modal>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

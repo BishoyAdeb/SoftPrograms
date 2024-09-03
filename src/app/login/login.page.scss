@@ -1,0 +1,37 @@
+:host {
+  direction: rtl;
+}
+
+.small-image {
+  width: 25%;
+  height: auto;
+}
+
+.login-labels {
+  font-size: larger;
+  font-weight: bold;
+}
+
+ion-checkbox {
+  --checkbox-background-checked: #0aacce !important; /* Color when checked */
+  --border-color-checked: #0aacce !important;
+}
+
+.labelColor {
+  color: #0aacce;
+  font-weight: bold;
+}
+
+ion-button {
+  --background: #001461;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-label {
+    margin: 0 5px; //space between the labels
+  }
+}

@@ -1,0 +1,137 @@
+:host {
+  direction: rtl;
+}
+
+.header-label {
+  font-weight: bolder;
+  font-size: x-large;
+  color: black;
+}
+
+.sub-header-label {
+  font-weight: bolder;
+  color: black;
+}
+
+.card-shadow {
+  perspective: 1000px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.forward-btn {
+  --border-color: #001461;
+  color: #001461;
+  ion-icon {
+    color: #001461;
+  }
+}
+
+.backward-btn {
+  color: #202020;
+  ion-icon {
+    color: #202020;
+  }
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-btn {
+  color: #001461;
+  font-weight: bold;
+  font-size: large;
+}
+
+ion-label {
+  color: #000 !important;
+}
+
+ion-checkbox {
+  --checkbox-background-checked: #0aacce !important; /* Color when checked */
+  --border-color-checked: #0aacce !important;
+}
+
+ion-toggle {
+  --track-background: #ddd;
+  --track-background-checked: #ddd;
+
+  --handle-background: #eb7769;
+  --handle-background-checked: #95c34e;
+}
+
+ion-modal {
+  direction: rtl;
+}
+
+.active {
+  color: green !important;
+}
+
+.inactive {
+  color: red !important;
+}
+
+.card-container {
+  position: relative; //Ensures the icon is positioned relative to this container
+  margin: 16px 0;
+  padding: 0;
+}
+
+.custom-card {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: visible; //Allow the icon to be visible
+}
+
+.close-icon {
+  position: absolute;
+  top: -10px;
+  left: -9px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  z-index: 10; // Make sure the icon appears on top
+}
+
+// progress bar
+.progress-circle {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.circular-chart {
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #e6e6e6; /* Light gray color for the background */
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 3.8;
+  stroke: #00bfff; /* Blue color for progress */
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.6s ease;
+}
+
+.progress-text {
+  direction: ltr !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+  color: #00bfff;
+}

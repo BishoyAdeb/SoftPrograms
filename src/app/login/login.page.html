@@ -1,0 +1,57 @@
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="d-flex justify-content-center" size="12">
+        <img src="assets/icon/wavingHand.png" class="small-image" alt="Example Photo">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-label class="d-flex justify-content-center login-labels">تسجيل
+          الدخول</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="mt-4">
+    <form [formGroup]="loginForm">
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="form-label">البريد الالكتروني</ion-label>
+          <ion-input class="form-control" formControlName="email" [placeholder]="validData.email"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="pt-3">
+          <ion-label class="form-label">كلمة السر</ion-label>
+          <ion-input class="form-control" formControlName="password" [placeholder]="validData.password"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-checkbox formControlName="rememberMe" class="ps-3"></ion-checkbox>
+          <ion-label class="form-label">تذكرني</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="form-label labelColor d-flex justify-content-end">نسيت كلمة السر؟</ion-label>
+          <!-- go to change password page *Not Required*  -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button class="d-flex justify-content-end px-5" (click)="login()">تسجيل الدخول</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <div class="label-container d-flex justify-content-center">
+            <ion-label class="form-label">ليس لديك حساب ؟</ion-label>
+            <ion-label class="form-label labelColor">سجل الان</ion-label>
+            <!-- go to registration page *Not Required*  -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
